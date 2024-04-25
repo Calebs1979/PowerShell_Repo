@@ -1,34 +1,27 @@
 ﻿Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
-# Function to generate a random password
-function Generate-Password {
-    param (
-        [int]$Length,
-        [bool]$UseAlphaNumerics,
-        [bool]$UseSpecialChars
-    )
+#region Enable Visual Styles
+[Windows.Forms.Application]::EnableVisualStyles()
+[System.Windows.Forms.Application]::EnableVisualStyles()
+#endregion Enable Visual Styles
 
-    $alphaNumerics = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    $specialChars = '!@#$%^&*()_+-=[]{}|;:,.<>?'
+#region Get the current logged-on user and display informational window
+$currentUserName = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+# Extract only the username from the full user name
+$currentUserName = $currentUserName -replace ".*\\" 
+# Capitalize the first letter of the username
+$capitalizedUserName = $currentUserName.Substring(0,1).ToUpper() + $currentUserName.Substring(1)
+# Create the message
+$message = "Hello, $capitalizedUserName!`n`nPlease ensure that you create a strong password, based on Microsoft's recommendations.`n`n* At least 12 characters long but 14 or more is better.`n`n* A combination of uppercase letters, lowercase letters, numbers, and symbols.`n`n* Not a word that can be found in a dictionary or the name of a person, character, product, or organization.`n`nThanks you $capitalizedUserName"
+# Display the popup window
+Add-Type -AssemblyName PresentationFramework
+[System.Windows.MessageBox]::Show($message, "Microsoft's password complexity recommendations ", "OK", "Information")
+#endregion Get the current logged-on user and display informational window
 
-    $chars = $alphaNumerics
-    if ($UseAlphaNumerics -and $UseSpecialChars) {
-        $chars += $specialChars
-    } elseif ($UseSpecialChars) {
-        $chars = $specialChars
-    }
+# Password Generator
 
-    $password = ''
-    $random = New-Object System.Random
-    for ($i = 0; $i -lt $Length; $i++) {
-        $password += $chars[$random.Next(0, $chars.Length)]
-    }
-
-    return $password
-}
-
-# Function to create GUI
+#regionFunction to create GUI
 function Create-GUI {
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "Password Generator"
@@ -39,12 +32,12 @@ function Create-GUI {
     $form.StartPosition = "CenterScreen"
     $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
 
-    $dropdownlabel = New-Object System.Windows.Forms.Label
-    $dropdownlabel.Font = New-Object System.Drawing.Font("Arial Black", 12,[System.Drawing.FontStyle]::Bold,[System.Drawing.GraphicsUnit]::Point, 0)
-    $dropdownlabel.Text = "Password Generator v1.0"
-    $dropdownlabel.Location = New-Object System.Drawing.Point(10, 20)
-    $dropdownlabel.AutoSize = $true
-    $form.Controls.Add($dropdownlabel)
+    $formheaderlabel = New-Object System.Windows.Forms.Label
+    $formheaderlabel.Font = New-Object System.Drawing.Font("Arial Black", 12,[System.Drawing.FontStyle]::Bold,[System.Drawing.GraphicsUnit]::Point, 0)
+    $formheaderlabel.Text = "Password Generator v1.0"
+    $formheaderlabel.Location = New-Object System.Drawing.Point(10, 20)
+    $formheaderlabel.AutoSize = $true
+    $form.Controls.Add($formheaderlabel)
 
     $dropdown = New-Object System.Windows.Forms.ComboBox
     $dropdown.Location = New-Object System.Drawing.Point(10, 80)
@@ -60,16 +53,15 @@ function Create-GUI {
     $form.Controls.Add($labeldropdown)
 
      # Create Numbers checkbox
-    $checkboxNumbers = New-Object System.Windows.Forms.CheckBox
-    $checkboxNumbers.Text = "Include Numbers"
-    $checkboxNumbers.Location = New-Object System.Drawing.Point(10, 130)
-    $checkboxNumbers.Size = New-Object System.Drawing.Size(180, 30)
-    $form.Controls.Add($checkboxNumbers)
+    $Numberscheckbox = New-Object System.Windows.Forms.CheckBox
+    $Numberscheckbox.Text = "Include Numbers"
+    $Numberscheckbox.Location = New-Object System.Drawing.Point(10, 130)
+    $Numberscheckbox.Size = New-Object System.Drawing.Size(180, 30)
+    $form.Controls.Add($Numberscheckbox)
 
     # Create Uppercase Checkbox
     $UppercaseCheckBox = New-Object System.Windows.Forms.CheckBox
     $UppercaseCheckBox.Location = New-Object System.Drawing.Point(10, 170)
-    #$UppercaseCheckBox.Size = New-Object System.Drawing.Size(180, 30)
     $UppercaseCheckBox.AutoSize = $true
     $UppercaseCheckBox.Text = "Include Uppercase"
     $form.Controls.Add($UppercaseCheckBox)
@@ -77,7 +69,6 @@ function Create-GUI {
     # Create Lowercase Checkbox
     $LowercaseCheckBox = New-Object System.Windows.Forms.CheckBox
     $LowercaseCheckBox.Location = New-Object System.Drawing.Point(10, 210)
-    #$LowercaseCheckBox.Size = New-Object System.Drawing.Size(180, 30)
     $LowercaseCheckBox.AutoSize = $true
     $LowercaseCheckBox.Text = "Include Lowercase"
     $form.Controls.Add($LowercaseCheckBox)
@@ -85,7 +76,6 @@ function Create-GUI {
     # Create Special Characters
     $specialCharsCheckBox = New-Object System.Windows.Forms.CheckBox
     $specialCharsCheckBox.Location = New-Object System.Drawing.Point(10, 250)
-    #$specialCharsCheckBox.Size = New-Object System.Drawing.Size(180, 30)
     $specialCharsCheckBox.AutoSize = $true
     $specialCharsCheckBox.Text = "Include Special Characters"
     $form.Controls.Add($specialCharsCheckBox)
@@ -95,20 +85,34 @@ function Create-GUI {
     $outputTextBox.Size = New-Object System.Drawing.Size(400, 30)
     $form.Controls.Add($outputTextBox)
 
+    # Create Generate Password button
     $generateButton = New-Object System.Windows.Forms.Button
+    $generateButton.Text = "Generate Password"
     $generateButton.Location = New-Object System.Drawing.Point(10, 350)
-    $generateButton.AutoSize = $true
-    #$generateButton.Size = New-Object System.Drawing.Size(120, 30)
     $generateButton.BackColor = [System.Drawing.Color]::White
     $generateButton.ForeColor = "#000000"
-    $generateButton.Text = "Generate Password"
+    $generateButton.Size = New-Object System.Drawing.Size(112, 30)
+
+    # Add click event handler for Generate button
     $generateButton.Add_Click({
-        $length = $dropdown.SelectedItem
-        $UppercaseCheckBox = $UppercaseCheckBox.Checked
-        $LowercaseCheckBox = $LowercaseCheckBox.Checked
-        $checkboxNumbers = $checkboxNumbers.Checked
-        $specialCharsCheckBox = $specialCharsCheckBox.Checked
-        $outputTextBox.Text = Generate-Password -Length $length -UseUppercase $UppercaseCheckBox -UseLowercase $LowercaseCheckBox -UsecheckboxNumbers $checkboxNumbers -UsespecialCharsCheckBox $specialCharsCheckBox
+        # Function to generate password based on selected options
+        function Generate-Password {
+            $length = $dropdown.SelectedItem
+            $characters = @()
+            if ($LowercaseCheckBox.Checked) { $characters += [char[]]'abcdefghijklmnopqrstuvwxyz' }
+            if ($UppercaseCheckBox.Checked) { $characters += [char[]]'ABCDEFGHIJKLMNOPQRSTUVWXYZ' }
+            if ($Numberscheckbox.Checked) { $characters += [char[]]'0123456789' }
+            if ($specialCharsCheckBox.Checked) { $characters += [char[]]'!@#$%^&*()-_=+[]{};:,.<>?/' }
+
+            $password = ''
+            for ($i = 0; $i -lt $length; $i++) {
+                $password += $characters[(Get-Random -Minimum 0 -Maximum $characters.Length)]
+            }
+            $outputTextBox.Text = $password
+        }
+
+        # Generate password
+        Generate-Password
     })
     $form.Controls.Add($generateButton)
 
@@ -116,8 +120,7 @@ function Create-GUI {
     $copyButton = New-Object System.Windows.Forms.Button
     $copyButton.Location = New-Object System.Drawing.Point(150, 350)
     $copyButton.Name = "copyButton"
-    #$copyButton.Size = New-Object System.Drawing.Size(117, 30)
-    $copyButton.AutoSize = $true
+    $copyButton.Size = New-Object System.Drawing.Size(120, 30)
     $copyButton.BackColor = [System.Drawing.Color]::White
     $copyButton.ForeColor = "#000000"
     $copyButton.TabIndex = 7
@@ -129,10 +132,9 @@ function Create-GUI {
 
      # Add Exit button control to Password Form
     $exitButton = New-Object System.Windows.Forms.Button
-    $exitButton.Location = New-Object System.Drawing.Point(420, 350)
+    $exitButton.Location = New-Object System.Drawing.Point(400, 350)
     $exitButton.Name = "exitButton"
-    #$exitButton.Size = New-Object System.Drawing.Size(70, 30)
-    $exitButton.AutoSize = $true
+    $exitButton.Size = New-Object System.Drawing.Size(80, 30)
     $exitButton.BackColor = [System.Drawing.Color]::White
     $exitButton.ForeColor = "#000000"
     $exitButton.TabIndex = 7
@@ -148,7 +150,7 @@ function Create-GUI {
     # Create Picture Box
     $pictureBox = New-Object System.Windows.Forms.PictureBox
     $pictureBox.Location = New-Object System.Drawing.Point(250, 70)
-    $imageURL = "https://github.com/Calebs1979/PowerShell_Repo/blob/main/PowerShell%20WinForm%20GUI%20Scripts/Logo.v1.png"
+    $imageURL = "https://github.com/Calebs1979/PowerShell_Repo/blob/main/PowerShell%20WinForm%20GUI%20Scripts/Logo.v1.png?raw=true"
     $image = [System.Net.WebRequest]::Create($imageUrl).GetResponse().GetResponseStream()
     $pictureBox.Image = [System.Drawing.Image]::FromStream($image)
     $pictureBox.SizeMode = "Stretch"  # Fit the image within the PictureBox
@@ -158,5 +160,5 @@ function Create-GUI {
     $form.ShowDialog() | Out-Null
 }
 
-# Run the GUI
+# Continue running the script in the background
 Create-GUI
