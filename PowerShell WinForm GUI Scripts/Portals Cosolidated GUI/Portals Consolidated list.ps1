@@ -34,8 +34,6 @@ $label4 = New-Object System.Windows.Forms.Label
 $label5 = New-Object System.Windows.Forms.Label
 $label6 = New-Object System.Windows.Forms.Label
 $label7 = New-Object System.Windows.Forms.Label
-$button2 = New-Object System.Windows.Forms.Button
-$button5 = New-Object System.Windows.Forms.Button
 $button6 = New-Object System.Windows.Forms.Button
 $button7 = New-Object System.Windows.Forms.Button
 $panel1 = New-Object System.Windows.Forms.Panel
@@ -54,7 +52,6 @@ $panel1.AutoSizeMode = [System.Windows.Forms.AutoSizeMode]::GrowAndShrink
 $panel1.BackColor = [System.Drawing.Color]::FromArgb(44,62,80)
 $panel1.Controls.Add($label5)
 $panel1.Controls.Add($button4)
-$panel1.Controls.Add($button2)
 $panel1.Controls.Add($label1)
 $panel1.Dock = [System.Windows.Forms.DockStyle]::Top
 $panel1.Location = New-Object System.Drawing.Point(0, 0)
@@ -77,98 +74,6 @@ $label5.TabIndex = 5
 $label5.Text = "Consolidated Portal Links"
 $label5.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
 #endregionlabel5
-
-#regionbutton2 Designer icon button
-#
-$button2.Anchor = [System.Windows.Forms.AnchorStyles]"Top,Right"
-$button2.BackgroundImage= [System.Drawing.Image]::FromFile("C:\ccadmin\Modern Flat UI Design Dashboard\man.png")
-$button2.BackgroundImageLayout = [System.Windows.Forms.ImageLayout]::Stretch
-$button2.FlatAppearance.BorderSize = 0
-$button2.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-$button2.Location = New-Object System.Drawing.Point(1071, 15)
-$button2.Name = "Designericonbutton"
-$button2.Size = New-Object System.Drawing.Size(43, 40)
-$button2.TabIndex = 2
-$button2.UseVisualStyleBackColor = $true
-function OnClick_button2 {
-    # Create the About popup window
-    $developerpopupform = New-Object System.Windows.Forms.Form
-    $developerpopupform.Text = "Designed By"
-    $developerpopupform.Size = New-Object System.Drawing.Size(420, 220)
-    $developerpopupform.BackColor = [System.Drawing.Color]::FromArgb(44,62,80)
-    $developerpopupform.StartPosition = "CenterScreen"
-    
-    # Add header label
-    $labelHeader1 = New-Object System.Windows.Forms.Label
-    $labelHeader1.AutoSize = $true
-    $labelHeader1.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $labelHeader1.Location = New-Object System.Drawing.Point(10, 10)
-    $developerpopupform.Controls.Add($labelHeader1)
-    
-    # Add Name label
-    $Namelabel = New-Object System.Windows.Forms.Label
-    $Namelabel.ForeColor = "#ffffff"
-    $Namelabel.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $Namelabel.Text = "Name: Caleb" 
-    $Namelabel.AutoSize = $true
-    $Namelabel.Location = New-Object System.Drawing.Point(10, 20)
-
-    # Add Surname label
-    $Surnamelabel = New-Object System.Windows.Forms.Label
-    $Surnamelabel.ForeColor = "#ffffff"
-    $Surnamelabel.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $Surnamelabel.Text = "Surname: Smith" 
-    $Surnamelabel.AutoSize = $true
-    $Surnamelabel.Location = New-Object System.Drawing.Point(250, 20)
-
-    # Add Email label
-    $emaillabel = New-Object System.Windows.Forms.Label
-    $emaillabel.ForeColor = "#ffffff"
-    $emaillabel.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $emaillabel.Text = "Email: Caleb.s1979@gmail.com" 
-    $emaillabel.AutoSize = $true
-    $emaillabel.Location = New-Object System.Drawing.Point(10, 60)
-    
-    # Add Label Developer
-
-    $Developerlabel = New-Object System.Windows.Forms.Label
-    $Developerlabel.ForeColor = "#ffffff"
-    $Developerlabel.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $Developerlabel.Location = New-Object System.Drawing.Point(250, 60)
-    $Developerlabel.AutoSize = $true
-    $Developerlabel.Text = "Developer: Caleb Smith"
-
-    # Add Label Build version
-
-    $Buildversionlabel = New-Object System.Windows.Forms.Label
-    $Buildversionlabel.ForeColor = "#ffffff"
-    $Buildversionlabel.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $Buildversionlabel.Location = New-Object System.Drawing.Point(250, 60)
-    $Buildversionlabel.AutoSize = $true
-    $Buildversionlabel.Text = "Build version 1.130424"
-
-     # Add Label Copyright
-    $CopyrightDesignerlabel = New-Object System.Windows.Forms.Label
-    $CopyrightDesignerlabel.ForeColor = "#ffffff"
-    $CopyrightDesignerlabel.Font = New-Object System.Drawing.Font("Arial",10,[System.Drawing.FontStyle]::Bold)
-    $CopyrightDesignerlabel.Location = New-Object System.Drawing.Point(10, 100)
-    $CopyrightDesignerlabel.AutoSize = $true
-    $CopyrightDesignerlabel.Text = "All rights reserved.Copyright © $(Get-Date -Format 'yyyy')."
-
-    # Add labels to the About form
-    $developerpopupform.Controls.Add($labelHeader1)
-    $developerpopupform.Controls.Add($Namelabel)
-    $developerpopupform.Controls.Add($Surnamelabel)
-    $developerpopupform.Controls.Add($emaillabel)
-    $developerpopupform.Controls.Add($Developerlabel)
-    $developerpopupform.Controls.Add($Buildversionlabel)
-    $developerpopupform.Controls.Add($CopyrightDesignerlabel)
-    $developerpopupform.Controls.Add($Designedbylabel)
-    # Show the About popup window
-    $developerpopupform.ShowDialog() | Out-Null
-}
-$button2.Add_Click( { OnClick_button2 } )
-#endregion button2
 
 #regionlabel1 Admin Dashboard
 #
@@ -200,7 +105,6 @@ $panel2.Controls.Add($entraidcomboBox)
 $panel2.Controls.Add($azurecomboBox)
 $panel2.Controls.Add($button7)
 $panel2.Controls.Add($button6)
-$panel2.Controls.Add($button5)
 $panel2.Dock = [System.Windows.Forms.DockStyle]::Left
 $panel2.Location = New-Object System.Drawing.Point(0, 58)
 $panel2.Name = "panel2"
@@ -1112,36 +1016,21 @@ function OnClick_button7 {$confirm = [System.Windows.Forms.MessageBox]::Show("Ar
 $button7.Add_Click( { OnClick_button7 } )
 #endregion button7
 
-#regionbutton6 - Dashboard
+#regionbutton6 - Menu Dropbox
 #
 $button6.Anchor = [System.Windows.Forms.AnchorStyles]"Top,Left"
 $button6.FlatAppearance.BorderSize = 0
 $button6.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 $button6.Font = New-Object System.Drawing.Font("Segoe UI", 9.75,[System.Drawing.FontStyle]::Bold,[System.Drawing.GraphicsUnit]::Point, 0)
 #$button6.ForeColor = [System.Drawing.Color]::FromArgb(255,128,0)
-$button6.Location = New-Object System.Drawing.Point(73, 12)
+$button6.Location = New-Object System.Drawing.Point(10, 12)
 $button6.Name = "button6"
 $button6.Size = New-Object System.Drawing.Size(118, 31)
 $button6.TabIndex = 6
-$button6.Text = "Dashboard"
+$button6.Text = "Menu Dropbox"
 $button6.TextAlign = [System.Drawing.ContentAlignment]::MiddleLeft
 $button6.UseVisualStyleBackColor = $true
 #endregion button6
-
-#regionbutton5 - button5
-#
-$button5.BackColor = [System.Drawing.Color]::FromArgb(44,62,80)
-$button5.BackgroundImage = [System.Drawing.Image]::FromFile("C:\ccadmin\Modern Flat UI Design Dashboard\home.png")
-$button5.BackgroundImageLayout = [System.Windows.Forms.ImageLayout]::Zoom
-$button5.FlatAppearance.BorderSize = 0
-$button5.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
-$button5.ForeColor = [System.Drawing.Color]::Transparent
-$button5.Location = New-Object System.Drawing.Point(6, 6)
-$button5.Name = "button5"
-$button5.Size = New-Object System.Drawing.Size(51, 43)
-$button5.TabIndex = 5
-$button5.UseVisualStyleBackColor = $true
-#endregion button5
 
 #region panel3 - panel3
 #
