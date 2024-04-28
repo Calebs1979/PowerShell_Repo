@@ -1,4 +1,7 @@
-﻿# Create a form
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+ 
+ # Create a form
             $gposearchform = New-Object System.Windows.Forms.Form
             $gposearchform.Text = "Search AD Group Policies"
             $gposearchform.BackColor = [System.Drawing.Color]::AliceBlue
