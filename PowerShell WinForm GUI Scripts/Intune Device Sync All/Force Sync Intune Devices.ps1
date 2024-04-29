@@ -13,8 +13,8 @@ Start-Transcript -Path "C:\Transcripts\IntuneDeviceSync Logs\$((Get-Date).ToStri
 
 #endregion Create Reports log folder if not exist
 
-#region Check if Active Directory module is installed
-$MsGraphModule = Get-Module -Name ActiveDirectory -ListAvailable
+#region Check if MS Graph module is installed
+$MsGraphModule = Get-Module -Name Microsoft.Graph.Intune -ListAvailable
 #
 # If not installed, install Microsoft Graph module
 if (-not $MsGraphModule) {
@@ -24,7 +24,7 @@ if (-not $MsGraphModule) {
     #Import Microsoft Graph module
     Import-Module Microsoft.Graph.Intune
 }
-#endregion Check if Active Directory module is installed
+#endregion Check if MS Graph module is installed
 
 #region Create form
 $Form = New-Object System.Windows.Forms.Form
