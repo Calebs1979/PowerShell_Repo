@@ -1,4 +1,7 @@
-﻿# Create a form
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+ 
+ # Create a form
             $gposearchform = New-Object System.Windows.Forms.Form
             $gposearchform.Text = "Search AD Group Policies"
             $gposearchform.BackColor = [System.Drawing.Color]::AliceBlue
@@ -69,7 +72,7 @@ $gposearchform.Controls.Add($searchCriteria)
 # Create Picture Box
     $pictureBox = New-Object System.Windows.Forms.PictureBox
     $pictureBox.Location = New-Object System.Drawing.Point(10, 10)
-    $imageURL = "https://github.com/Calebs1979/PowerShell_Repo/blob/main/PowerShell%20WinForm%20GUI%20Scripts/GPO%20Search%20GUI/GPO%20Search.png?raw=true"
+    $imageURL = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/GPO%20Search%20GUI/GPO%20Search.png"
     $image = [System.Net.WebRequest]::Create($imageUrl).GetResponse().GetResponseStream()
     $pictureBox.Image = [System.Drawing.Image]::FromStream($image)
     $pictureBox.SizeMode = "Stretch"  # Fit the image within the PictureBox

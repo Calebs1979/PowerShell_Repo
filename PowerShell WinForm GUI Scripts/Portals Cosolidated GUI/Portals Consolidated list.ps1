@@ -899,7 +899,331 @@ $entraidcomboBox.TabIndex = 9
 $entraidcomboBox.Text = "Entra ID"
 #endregion entraid comboBox
 
-#regionazurecomboBox - Azure
+#region Add click action to Azure ComboBox selection AzurecomboBox - Open Portal1
+$azurecomboBox.Add_SelectedIndexChanged({
+    OpenPortal1
+})
+#endregion Click action to Combobox selection
+
+#region Function to open portal AzurecomboBox  - Open Portal1
+function OpenPortal1{
+    $selectedPortal = $AzurecomboBox.SelectedItem.ToString()
+    switch ($selectedPortal) {
+        "Azure Preview Portal" {
+            Start-Process "https://preview.portal.azure.com/"
+            break
+        }
+        "Sentinel" {
+            Start-Process "https://portal.azure.com/#blade/Microsoft_Azure_Security_Insights/WorkspaceSelectorBlade?"
+            break
+        }
+        "Azure Resource Graph Explorer" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/ArgQueryBlade?"
+            break
+        }
+        "Purview Unified Data Governance" {
+            Start-Process "https://web.purview.azure.com/"
+            break
+        }
+        "Automanage" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_AutoManagedVirtualMachines/AutomanageMenuBlade"
+            break
+        }
+        "Azure Virtual Desktop" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_WVD/WvdManagerMenuBlade/~/overview"
+            break
+        }
+        "Remote Desktop Web Client" {
+            Start-Process "https://client.wvd.microsoft.com/arm/webclient/index.html"
+            break
+        }
+        "Azure Automation" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Automation%2FAutomationAccounts"
+            break
+        }
+        "Function App" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Web%2Fsites/kind/functionapp"
+            break
+        }
+        "Azure Cosmos DB" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DocumentDb%2FdatabaseAccounts"
+            break
+        }
+        "CosmosDB Explorer" {
+            Start-Process "https://cosmos.azure.com/"
+            break
+        }
+        "Monitor" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Monitoring/AzureMonitoringBrowseBlade/~/overview"
+            break
+        }
+        "Application Insights" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.insights%2Fcomponents"
+            break
+        }
+        "Log Analytics" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.OperationalInsights%2Fworkspaces"
+            break
+        }
+        "App Service plans" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Web%2FserverFarms"
+            break
+        }
+        "App Services" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Web%2Fsites"
+            break
+        }
+        "SQL servers" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers"
+            break
+        }
+        "SQL databases" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Fdatabases"
+            break
+        }
+        "SQL elastic pools" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2Fservers%2Felasticpools"
+            break
+        }
+        "SQL managed instance" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Sql%2FmanagedInstances"
+            break
+        }
+        "Cost Management + Billing" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_GTM/ModernBillingMenuBlade/~/BillingAccounts"
+            break
+        }
+        "Load balancing" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Network/LoadBalancingHubMenuBlade/~/overview"
+            break
+        }
+        "Storage accounts" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Storage%2FStorageAccounts"
+            break
+        }
+        "Disks" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2Fdisks"
+            break
+        }
+        "Virtual networks" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Network%2FvirtualNetworks"
+            break
+        }
+        "Microsoft Defender for Cloud" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Security/SecurityMenuBlade/~/0"
+            break
+        }
+        "Data factories" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DataFactory%2FdataFactories"
+            break
+        }
+        "Help + support" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Support/HelpAndSupportBlade/~/overview"
+            break
+        }
+        "Subscriptions" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Billing/SubscriptionsBlade?"
+            break
+        }
+        "Resource groups" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResourceGroups?"
+            break
+        }
+        "Network security groups" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Network%2FNetworkSecurityGroups"
+            break
+        }
+        "Key Vault" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.KeyVault%2Fvaults"
+            break
+        }
+        "Data Explorer" {
+            Start-Process "https://dataexplorer.azure.com/"
+            break
+        }
+        "Virtual machines" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2FVirtualMachines"
+            break
+        }
+        "Kubernetes services" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerService%2FmanagedClusters"
+            break
+        }
+        "Azure Cache for Redis" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Cache%2FRedis"
+            break
+        }
+        "Service Bus" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.ServiceBus%2Fnamespaces"
+            break
+        }
+        "Application Gateway" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Network/LoadBalancingHubMenuBlade/~/applicationgateways"
+            break
+        }
+        "Web Application Firewall policies" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Network%2FFrontDoorWebApplicationFirewallPolicies"
+            break
+        }
+        "Servers - Azure Arc" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.HybridCompute%2Fmachines"
+            break
+        }
+        "SSH Keys" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2FsshPublicKeys"
+            break
+        }
+        "Data Collection Rules" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Insights%2FdataCollectionRules"
+            break
+        }
+        "Container Registries" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.ContainerRegistry%2Fregistries"
+            break
+        }
+        "Azure Policy" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Policy/PolicyMenuBlade/~/overview"
+            break
+        }
+        "Azure Cloud Shell" {
+            Start-Process "https://portal.azure.com/#cloudshell/"
+            break
+        }
+        "Azure Firewall Manager" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_HybridNetworking/FirewallManagerMenuBlade"
+            break
+        }
+        "Public IP Addresses" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Network%2FPublicIpAddresses"
+            break
+        }"Azure Management Groups" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_ManagementGroups/ManagementGroupBrowseBlade?"
+            break
+        }"Azure Update Management Center" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Automation/UpdateCenterMenuBlade/~/overview?"
+            break
+        }"Backup Center" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_DataProtection/BackupCenterMenuBlade/~/overview"
+            break
+        }"Azure Synapse Studio" {
+            Start-Process "https://web.azuresynapse.net/"
+            break
+        }"API Management services" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.ApiManagement%2Fservice?"
+            break
+        }
+        "Azure Front Door and CDN profiles" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.cdn%2Fprofiles?"
+            break
+        }
+        "Azure Managed Identities" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.ManagedIdentity%2FuserAssignedIdentities?"
+            break
+        }
+        "Azure Service Health" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Health/ServiceIssuesBlade?"
+            break
+        }
+        "Azure - Create a Resource" {
+            Start-Process "https://portal.azure.com/#create/hub?"
+            break
+        }
+        "Network Watcher" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Network/NetworkWatcherMenuBlade/~/overview?"
+            break
+        }
+        "Azure Advisor" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_Expert/AdvisorMenuBlade/~/score?"
+            break
+        }
+        "Availability Sets" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Compute%2FavailabilitySets?"
+            break
+        }
+        "Scale Sets" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Compute%2FvirtualMachineScaleSets?"
+            break
+        }
+        "Azure Machine Learning Studio" {
+            Start-Process "https://ml.azure.com/"
+            break
+        }
+        "DB for PostgreSQL servers" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DBforPostgreSQL%2Fservers?"
+            break
+        }
+        "DB for PostgreSQL flexible servers" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DBforPostgreSQL%2FflexibleServers?"
+            break
+        }
+        "DB for PostgreSQL Hyperscale (Citus)" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.DBforPostgreSQL%2FserverGroupsv2?"
+            break
+        }
+        "PostgreSQL servers - Azure Arc" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.AzureArcData%2FpostgresInstances?"
+            break
+        }
+        "Azure Databricks" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Databricks%2Fworkspaces?"
+            break
+        }
+        "Azure Synapse Analytics" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Synapse%2Fworkspaces?"
+            break
+        }
+        "Templates" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.Gallery%2Fmyareas%2Fgalleryitems?"
+            break
+        }"Shared dashboards" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Portal%2Fdashboards?"
+            break
+        }
+        "Universal Print Console" {
+            Start-Process "https://portal.azure.com/#view/Universal_Print/MainMenuBlade/~/Printers?#blade/Microsoft_Azure_Security_Insights/WorkspaceSelectorBlade?"
+            break
+        }
+        "Azure DevOps Portal" {
+            Start-Process "https://dev.azure.com/"
+            break
+        }
+        "Azure Data Factory" {
+            Start-Process "https://adf.azure.com/"
+            break
+        }
+        "Azure Price Calculator" {
+            Start-Process "https://azure.microsoft.com/pricing/calculator/"
+            break
+        }
+        "Azure Logic Apps" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Logic%2Fworkflows"
+            break
+        }
+        "Azure Resources PIM" {
+            Start-Process "https://portal.azure.com/#view/Microsoft_Azure_PIMCommon/CommonMenuBlade/~/azurerbac"
+            break
+        }
+        "Azure OpenAI Studio" {
+            Start-Process "https://oai.azure.com/portal"
+            break
+        }
+        "Azure Content Safety" {
+            Start-Process "https://contentsafety.cognitive.azure.com/"
+            break
+        }
+        "Azure Workbooks" {
+            Start-Process "https://portal.azure.com/?feature.msaljs=true#view/HubsExtension/BrowseResource/resourceType/microsoft.insights%2Fworkbooks"
+            break
+        }
+        "Route tables" {
+            Start-Process "https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Network%2FrouteTables"
+            break
+        }
+    }
+}
+#endregion Function to open portal
+
+#regionazurecomboBox - Azure - Open Portal1
 #
 $azurecomboBox.AccessibleDescription = "Azure"
 $azurecomboBox.AccessibleName = "Azure"
@@ -907,7 +1231,6 @@ $azurecomboBox.FlatStyle = [System.Windows.Forms.FlatStyle]::Flat
 $azurecomboBox.Font = New-Object System.Drawing.Font("Segoe UI", 9.75,[System.Drawing.FontStyle]::Regular,[System.Drawing.GraphicsUnit]::Point, 0)
 $azurecomboBox.FormattingEnabled = $true
 $azurecomboBox.Items.AddRange(@(
-"Azure",
 "Azure Preview Portal",
 "Sentinel",
 "Azure Resource Graph Explorer",
@@ -1428,4 +1751,3 @@ $Form1.Text = "Consolidated Portal Links"
 $Form1.ShowDialog() | Out-Null
 #endregion form1
 #
-
