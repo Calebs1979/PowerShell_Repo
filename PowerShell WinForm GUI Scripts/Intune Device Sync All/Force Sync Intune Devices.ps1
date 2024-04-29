@@ -10,7 +10,6 @@ if (-not (Test-Path -Path $folderPath)) {
 
 # Start transcript log  file and write to path C:\ccadmin\
 Start-Transcript -Path "C:\Transcripts\IntuneDeviceSync Logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Transcript Log.txt"
-$outputtextbox.AppendText("Transcript has started and logged in 'C:\Transcripts\IntuneDeviceSync Logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Transcript Log.txt' ")
 
 #endregion Create Reports log folder if not exist
 
