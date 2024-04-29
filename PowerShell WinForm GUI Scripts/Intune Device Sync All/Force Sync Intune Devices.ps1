@@ -1,4 +1,4 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Windows.Forms.DataVisualization
 
@@ -43,7 +43,7 @@ $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
 #region Create Header Picture Box
     $pictureBox = New-Object System.Windows.Forms.PictureBox
     $pictureBox.Location = New-Object System.Drawing.Point(10, 30)
-    $imageURL = "C:\ccadmin\Intune Force All Device Sync\Header3.png"
+    $imageURL = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Intune%20Device%20Sync%20All/Header3.png"
     $image = [System.Net.WebRequest]::Create($imageUrl).GetResponse().GetResponseStream()
     $pictureBox.Image = [System.Drawing.Image]::FromStream($image)
     $pictureBox.SizeMode = "Stretch"  # Fit the image within the PictureBox
@@ -62,7 +62,7 @@ $windowsimageBox.add_MouseLeave($handlerLeave)
 $form.Controls.Add($windowsimageBox)
 
 # Download the image from the URL
-$imageUrl = "C:\ccadmin\Intune Force All Device Sync\Windows.png"
+$imageUrl = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Intune%20Device%20Sync%20All/windows.png"
 $image = [System.Drawing.Image]::FromStream((New-Object System.Net.WebClient).OpenRead($imageUrl))
 
 
@@ -167,7 +167,7 @@ $androidimageBox.add_MouseLeave($handlerLeave)
 $form.Controls.Add($androidimageBox)
 
 # Download the image from the URL
-$imageUrl = "C:\ccadmin\Intune Force All Device Sync\Android.png"
+$imageUrl = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Intune%20Device%20Sync%20All/android.png"
 $image = [System.Drawing.Image]::FromStream((New-Object System.Net.WebClient).OpenRead($imageUrl))
 
 
@@ -271,7 +271,7 @@ $iosimageBox.add_MouseLeave($handlerLeave)
 $form.Controls.Add($iosimageBox)
 
 # Download the image from the URL
-$imageUrl = "C:\ccadmin\Intune Force All Device Sync\ios.png"
+$imageUrl = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Intune%20Device%20Sync%20All/ios.png"
 $image = [System.Drawing.Image]::FromStream((New-Object System.Net.WebClient).OpenRead($imageUrl))
 
 
