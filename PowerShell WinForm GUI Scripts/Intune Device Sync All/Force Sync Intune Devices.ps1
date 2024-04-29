@@ -262,8 +262,8 @@ $androidimageBox.Add_Click({Connect-MsGraph
 #region Create iOS Image Box
 # Create a picture box (image button)
 $iosimageBox = New-Object System.Windows.Forms.PictureBox
-$iosimageBox.Size = New-Object System.Drawing.Size(80, 80)
-$iosimageBox.Location = New-Object System.Drawing.Point(280, 125)
+$iosimageBox.Size = New-Object System.Drawing.Size(85, 85)
+$iosimageBox.Location = New-Object System.Drawing.Point(280, 120)
 $iosimageBox.SizeMode = "Stretch"
 $iosimageBox.add_MouseEnter($handlerEnter)
 $iosimageBox.add_MouseLeave($handlerLeave)
