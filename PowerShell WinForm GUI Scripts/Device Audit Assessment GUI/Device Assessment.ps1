@@ -16,7 +16,7 @@ Start-Transcript -Path "C:\Transcripts\IntuneDeviceSync Logs\$((Get-Date).ToStri
 #region Create Header Picture Box
     $pictureBox = New-Object System.Windows.Forms.PictureBox
     $pictureBox.Location = New-Object System.Drawing.Point(10, 30)
-    $imageURL = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Intune%20Device%20Sync%20All/Header3.png"
+    $imageURL = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Device%20Audit%20Assessment%20GUI/Security-assessment-image.png"
     $image = [System.Net.WebRequest]::Create($imageUrl).GetResponse().GetResponseStream()
     $pictureBox.Image = [System.Drawing.Image]::FromStream($image)
     $pictureBox.SizeMode = "Stretch"  # Fit the image within the PictureBox
