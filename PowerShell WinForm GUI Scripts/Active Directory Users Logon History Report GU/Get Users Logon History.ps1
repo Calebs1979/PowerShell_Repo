@@ -15,7 +15,7 @@ $currentUserName = $currentUserName -replace ".*\\"
 $capitalizedUserName = $currentUserName.Substring(0,1).ToUpper() + $currentUserName.Substring(1)
 #
 # Create the message
-$message = "Hello, $capitalizedUserName!`n`nPlease ensure that you close the Tool when you have completed.`n`nThanks you $capitalizedUserName" 
+$message = "Hello, $capitalizedUserName!`n`nPlease ensure that you close the Tool when you have completed.`n`nThank you $capitalizedUserName" 
 #                                                                                                                                                               
 # Display the popup window                                                                                                                                       
 Add-Type -AssemblyName PresentationFramework                                                                                                                     
@@ -49,7 +49,7 @@ $form.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::None
 
 # Create PictureBox
 $pictureBox = New-Object System.Windows.Forms.PictureBox
-$pictureBox.ImageLocation = "C:\smiadmin\scripts\Active Directory Users Logon History Report GU\Header.BlueText.png"  # Replace with the path to your image
+$pictureBox.ImageLocation = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Active%20Directory%20Users%20Logon%20History%20Report%20GU/Header.BlueText.png"  # Replace with the path to your image
 $pictureBox.Size = New-Object System.Drawing.Size(430, 165)
 $pictureBox.Location = New-Object System.Drawing.Point(70,10)
 $pictureBox.SizeMode = "Zoom"
