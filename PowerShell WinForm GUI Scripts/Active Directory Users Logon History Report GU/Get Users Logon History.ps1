@@ -1,4 +1,4 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
 # Enable Visual Styles
@@ -99,8 +99,8 @@ $buttonRun = New-Object System.Windows.Forms.Button
 $buttonRun.BackColor = "#00b4f2"
 $buttonRun.ForeColor = "#ffffff"
 $buttonRun.Text = "Run"
-$buttonRun.Location = New-Object System.Drawing.Point(10,250)
-$buttonRun.AutoSize = $true
+$buttonRun.Location = New-Object System.Drawing.Point(10,247)
+$buttonRun.Size = New-Object System.Drawing.Size(80, 30)
 $buttonRun.Add_Click({
     $username = $textboxUsername.Text
     $selectedDays = $dropdownDays.SelectedItem
@@ -135,8 +135,8 @@ $buttonalluserslogonhistory = New-Object System.Windows.Forms.Button
 $buttonalluserslogonhistory.BackColor = "#91c300"
 $buttonalluserslogonhistory.ForeColor = "#ffffff"
 $buttonalluserslogonhistory.Text = "List All users Logon History"
-$buttonalluserslogonhistory.Location = New-Object System.Drawing.Point(100,250)
-$buttonalluserslogonhistory.AutoSize = $true
+$buttonalluserslogonhistory.Location = New-Object System.Drawing.Point(100,247)
+$buttonalluserslogonhistory.Size = New-Object System.Drawing.Size(200, 30)
 $buttonalluserslogonhistory.Add_Click({
 $Output = Get-ADUser -Filter * -Properties LastLogon | Select-Object Name, DistinguishedName, SID, @{Name="LastLogon"; Expression={[DateTime]::FromFileTime($_.LastLogon)}} | Out-GridView -Title "Search results for all users logon history." -PassThru | Export-Csv -Path "C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_ListAllUsersLogonHistory.csv" -NoTypeInformation -Delimiter ";"})
 Write-host "List All users Logon History Report, has been exported to 'C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_ListAllUsersLogonHistory.csv'"
@@ -197,7 +197,7 @@ $clearOutputButton.ForeColor = "#ffffff"
 $clearOutputButton.Location = New-Object System.Drawing.Point(110, 560)
 $clearOutputButton.Size = New-Object System.Drawing.Size(80, 30)
 $clearOutputButton.Text = "Clear Output"
-$clearOutputButton.AutoSize = $true
+#$clearOutputButton.AutoSize = $true
 $clearOutputButton.Add_Click({
     $textboxOutput.Clear()
 })
@@ -210,7 +210,7 @@ $exitButton.ForeColor = "#ffffff"
 $exitButton.Location = New-Object System.Drawing.Point(500, 560)
 $exitButton.Size = New-Object System.Drawing.Size(80, 30)
 $exitButton.Text = "Exit"
-$exitButton.AutoSize = $true
+#$exitButton.AutoSize = $true
 $exitButton.Add_Click({
     $form.Close()
 })
