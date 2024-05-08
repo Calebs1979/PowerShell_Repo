@@ -36,7 +36,52 @@ if (-not (Test-Path -Path $folderPath)) {
 # Start transcript log  file and write to path C:\RTAdmin\
 Start-Transcript -Path "C:\Temp\Users Logon History Reports\Transcript logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Transcript Log.txt"
 
+# Function to search user logon history across all domain controllers or a specific one
+function Search-UserLogonHistory {
+    param (
+        [string]$username,
+        [int]$days,
+        [string]$domainController
+    )
 
+    # Get current date
+    $endDate = Get-Date
+
+    # Calculate start date based on selected days
+    $startDate = $endDate.AddDays(-$days)
+
+    # Initialize array to store logon events
+    $logonEvents = @()
+
+    # Query a specific domain controller or all domain controllers in the domain
+    if ($domainController) {
+        $dcList = @($domainController)
+    } else {
+        $dcList = Get-ADDomainController -Filter * | Select-Object -ExpandProperty HostName
+    }
+
+    # Query each domain controller for logon events
+    foreach ($dc in $dcList) {
+        $events = Get-WinEvent -ComputerName $dc -FilterHashtable @{
+            LogName = 'Security'
+            ID = 4624
+            StartTime = $startDate
+            EndTime = $endDate
+        } | Where-Object { $_.Properties[5].Value -eq $username } | ForEach-Object {
+            [PSCustomObject]@{
+                'User' = $_.Properties[5].Value
+                'LogonDate' = $_.TimeCreated
+                'DomainController' = $dc
+            }
+        }
+
+        # Add events from current domain controller to the logon events array
+        $logonEvents += $events
+    }
+
+    # Output logon events
+    return $logonEvents
+}
 
 # Create the form
 $form = New-Object System.Windows.Forms.Form
@@ -131,16 +176,16 @@ $buttonRun.Add_Click({
 })
 $form.Controls.Add($buttonRun)
 
-$buttonalluserslogonhistory = New-Object System.Windows.Forms.Button
-$buttonalluserslogonhistory.BackColor = "#91c300"
-$buttonalluserslogonhistory.ForeColor = "#ffffff"
-$buttonalluserslogonhistory.Text = "List All users Logon History"
-$buttonalluserslogonhistory.Location = New-Object System.Drawing.Point(100,247)
-$buttonalluserslogonhistory.Size = New-Object System.Drawing.Size(200, 30)
+$buttonalluserslastlogondate = New-Object System.Windows.Forms.Button
+$buttonalluserslastlogondate.BackColor = "#91c300"
+$buttonalluserslastlogondate.ForeColor = "#ffffff"
+$buttonalluserslastlogondate.Text = "List All users Last Logon Date"
+$buttonalluserslastlogondate.Location = New-Object System.Drawing.Point(100,247)
+$buttonalluserslastlogondate.Size = New-Object System.Drawing.Size(200, 30)
 $buttonalluserslogonhistory.Add_Click({
-$Output = Get-ADUser -Filter * -Properties LastLogon | Select-Object Name, DistinguishedName, SID, @{Name="LastLogon"; Expression={[DateTime]::FromFileTime($_.LastLogon)}} | Out-GridView -Title "Search results for all users logon history." -PassThru | Export-Csv -Path "C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_ListAllUsersLogonHistory.csv" -NoTypeInformation -Delimiter ";"})
-Write-host "List All users Logon History Report, has been exported to 'C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_ListAllUsersLogonHistory.csv'"
-$form.Controls.Add($buttonalluserslogonhistory)
+$Output = Get-ADUser -Filter * -Properties LastLogon | Select-Object Name, DistinguishedName, SID, @{Name="LastLogon"; Expression={[DateTime]::FromFileTime($_.LastLogon)}} | Out-GridView -Title "Search results for all users last logon date." -PassThru | Export-Csv -Path "C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_List All users Last Logon Date Report.csv" -NoTypeInformation -Delimiter ";"})
+Write-host "List All users Last Logon Date Report, has been exported to 'C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_List All users Last Logon Date Report.csv'"
+$form.Controls.Add($buttonalluserslastlogondate)
 
 $textboxOutput = New-Object System.Windows.Forms.TextBox
 $textboxOutput.Multiline = $true
