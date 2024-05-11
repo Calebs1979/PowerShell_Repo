@@ -215,7 +215,8 @@ $exportToCsvButton.Add_Click({
     $saveFileDialog.Filter = "CSV Files (*.csv)|*.csv|All files (*.*)|*.*"
     $saveFileDialog.Title = "Export to CSV"
     if ($saveFileDialog.ShowDialog() -eq "OK") {
-        $events | Export-Csv -Path $saveFileDialog.FileName -NoTypeInformation
+        $outputText = $textboxOutput.Text
+        $outputText | Out-File -FilePath $saveFileDialog.FileName -Encoding utf8
         [System.Windows.Forms.MessageBox]::Show("File exported successfully!", "Export Successful", [System.Windows.Forms.MessageBoxButtons]::OK)
     }
 })
