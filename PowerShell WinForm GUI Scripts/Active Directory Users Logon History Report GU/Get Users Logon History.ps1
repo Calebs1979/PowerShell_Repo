@@ -182,8 +182,7 @@ $buttonalluserslastlogondate.ForeColor = "#ffffff"
 $buttonalluserslastlogondate.Text = "List All users Last Logon Date"
 $buttonalluserslastlogondate.Location = New-Object System.Drawing.Point(100,247)
 $buttonalluserslastlogondate.Size = New-Object System.Drawing.Size(200, 30)
-$buttonalluserslogonhistory.Add_Click({
-$Output = Get-ADUser -Filter * -Properties LastLogon | Select-Object Name, DistinguishedName, SID, @{Name="LastLogon"; Expression={[DateTime]::FromFileTime($_.LastLogon)}} | Out-GridView -Title "Search results for all users last logon date." -PassThru | Export-Csv -Path "C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_List All users Last Logon Date Report.csv" -NoTypeInformation -Delimiter ";"})
+$buttonalluserslastlogondate.Add_Click({Get-ADUser -Filter * -Properties LastLogon | Select-Object Name, DistinguishedName, SID, @{Name="LastLogon"; Expression={[DateTime]::FromFileTime($_.LastLogon)}} | Out-GridView -Title "Search results for all users last logon date." -PassThru | Export-Csv -Path "C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_List All users Last Logon Date Report.csv" -NoTypeInformation -Delimiter ";"})
 Write-host "List All users Last Logon Date Report, has been exported to 'C:\Temp\Users Logon History Reports\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_List All users Last Logon Date Report.csv'"
 $form.Controls.Add($buttonalluserslastlogondate)
 
@@ -215,7 +214,8 @@ $exportToCsvButton.Add_Click({
     $saveFileDialog.Filter = "CSV Files (*.csv)|*.csv|All files (*.*)|*.*"
     $saveFileDialog.Title = "Export to CSV"
     if ($saveFileDialog.ShowDialog() -eq "OK") {
-        $events | Export-Csv -Path $saveFileDialog.FileName -NoTypeInformation
+        $outputText = $textboxOutput.Text
+        $outputText | Out-File -FilePath $saveFileDialog.FileName -Encoding utf8
         [System.Windows.Forms.MessageBox]::Show("File exported successfully!", "Export Successful", [System.Windows.Forms.MessageBoxButtons]::OK)
     }
 })
