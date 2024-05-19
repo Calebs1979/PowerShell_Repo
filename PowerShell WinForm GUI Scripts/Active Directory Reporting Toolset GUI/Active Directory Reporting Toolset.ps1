@@ -1,4 +1,16 @@
-﻿Add-Type -AssemblyName System.Windows.FormsAdd-Type -AssemblyName System.Drawing# Check if Active Directory module is installed            $adModule = Get-Module -Name ActiveDirectory -ListAvailable# If not installed, install Active Directory module        if (-not $adModule) {            Write-Host "Installing Active Directory module..."            Install-WindowsFeature RSAT-AD-PowerShell# Import Active Directory module            Import-Module ActiveDirectory}# Create transcript log folder if not exist
+﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+# Check if Active Directory module is installed
+            $adModule = Get-Module -Name ActiveDirectory -ListAvailable
+# If not installed, install Active Directory module
+        if (-not $adModule) {
+            Write-Host "Installing Active Directory module..."
+            Install-WindowsFeature RSAT-AD-PowerShell
+# Import Active Directory module
+            Import-Module ActiveDirectory
+}
+# Create transcript log folder if not exist
             $folderPath = "C:\RTAdmin\Reports Toolset Files\Transcript logs"
             if (-not (Test-Path -Path $folderPath)) {  
             New-Item -Path $folderPath -ItemType Directory
@@ -10,7 +22,15 @@
 }
 # Start transcript log  file and write to path C:\RTAdmin\
             Start-Transcript -Path "C:\RTAdmin\Reports Toolset Files\Transcript logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Log1.txt"
-# Create the form            $form = New-Object System.Windows.Forms.Form            $form.Text = "Active Directory Report Toolset"            $form.Size = New-Object System.Drawing.Size(800, 800)            $Form.StartPosition = "CenterScreen"            $form.BackColor = [System.Drawing.Color]::AliceBlue            $form.Forecolor="#000000"# monthCalendar1
+# Create the form
+            $form = New-Object System.Windows.Forms.Form
+            $form.Text = "Active Directory Report Toolset"
+            $form.Size = New-Object System.Drawing.Size(800, 800)
+            $Form.StartPosition = "CenterScreen"
+            $form.BackColor = [System.Drawing.Color]::AliceBlue
+            $form.Forecolor="#000000"
+
+# monthCalendar1
 #
             $monthCalendar1 = New-Object System.Windows.Forms.MonthCalendar
             $monthCalendar1.BackColor = [System.Drawing.Color]::AliceBlue
@@ -18,12 +38,84 @@
             $monthCalendar1.Location = New-Object System.Drawing.Point(520, 50)
             $monthCalendar1.MaximumSize = New-Object System.Drawing.Size(230, 200)
             $monthCalendar1.Name = "monthCalendar1"
-            $monthCalendar1.TabIndex = 1            $form.Controls.Add($monthCalendar1)# Create a picture box            $pictureBox = New-Object System.Windows.Forms.PictureBox            $pictureBox.Size = New-Object System.Drawing.Size(450, 200)            $pictureBox.Location = New-Object System.Drawing.Point(20, 20)            $pictureBox.ImageLocation = "C:\RTAdmin\Active Directory Reporting Toolset GUI\AD_ReportingToolset_Header.png"            $pictureBox.SizeMode = [System.Windows.Forms.PictureBoxSizeMode]::StretchImage            $form.Controls.Add($pictureBox)# Create a label            $labelTitle = New-Object System.Windows.Forms.Label            $labelTitle.Text = "Select Function"            $labelTitle.AutoSize = $true            $labelTitle.Forecolor = [System.Drawing.Color]::LightSteelBlue            $labelTitle.Location = New-Object System.Drawing.Point(330, 257)            $labelTitle.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)            $form.Controls.Add($labelTitle)# Create a dropdown list for functions            $comboBoxFunctions = New-Object System.Windows.Forms.ComboBox            $comboBoxFunctions.Size = New-Object System.Drawing.Size(300, 30)            $comboBoxFunctions.Location = New-Object System.Drawing.Point(10, 260)            $comboBoxFunctions.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDown            $form.Controls.Add($comboBoxFunctions)# Add functions to the dropdown list            $functions = @(            "Backup All Group Policies",            "Check AD Replication",            "Default Domain Password Policy",            "Export All DNS Zone Records",            "Generate Passwords",            "List All AD Users",            "List All Domain Controllers",            "List All Domain SSL Certificates",            "List All Installed Hotfixes",            "List All Objects Deleted in past month"            "List All Security Groups",            "List All Users Password Last Reset",            "List All Users Logon History",            "List User Password Last Reset",            "List User Logon History",            "List Disabled User Accounts",            "List Inactive Users (30 Days)",            "List Inactive Users (60 Days)",            "List Inactive Users (90 Days)",            "List Locked User Accounts",            "List Users Created in the Past Month",            "Search Group Policies",            "Unlock AD User Accounts"            )            $functions | ForEach-Object { $comboBoxFunctions.Items.Add($_) }# Create a text box for status output            $textBoxOutput = New-Object System.Windows.Forms.TextBox            $textBoxOutput.Multiline = $true            $textBoxOutput.ScrollBars = "Vertical"            $textBoxOutput.Size = New-Object System.Drawing.Size(760, 400)            $textBoxOutput.Location = New-Object System.Drawing.Point(10, 300)            $textBoxOutput.Text = ""            $textBoxOutput.Font = New-Object System.Drawing.Font("Consolas", 10)            function Add-textBoxOutput{
+            $monthCalendar1.TabIndex = 1
+            $form.Controls.Add($monthCalendar1)
+
+# Create a picture box
+            $pictureBox = New-Object System.Windows.Forms.PictureBox
+            $pictureBox.Size = New-Object System.Drawing.Size(450, 200)
+            $pictureBox.Location = New-Object System.Drawing.Point(20, 20)
+            $pictureBox.ImageLocation = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Active%20Directory%20Reporting%20Toolset%20GUI/AD_ReportingToolset_Header.png"
+            $pictureBox.SizeMode = [System.Windows.Forms.PictureBoxSizeMode]::StretchImage
+            $form.Controls.Add($pictureBox)
+# Create a label
+            $labelTitle = New-Object System.Windows.Forms.Label
+            $labelTitle.Text = "Select Function"
+            $labelTitle.AutoSize = $true
+            $labelTitle.Forecolor = [System.Drawing.Color]::LightSteelBlue
+            $labelTitle.Location = New-Object System.Drawing.Point(330, 257)
+            $labelTitle.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)
+            $form.Controls.Add($labelTitle)
+# Create a dropdown list for functions
+            $comboBoxFunctions = New-Object System.Windows.Forms.ComboBox
+            $comboBoxFunctions.Size = New-Object System.Drawing.Size(300, 30)
+            $comboBoxFunctions.Location = New-Object System.Drawing.Point(10, 260)
+            $comboBoxFunctions.DropDownStyle = [System.Windows.Forms.ComboBoxStyle]::DropDown
+            $form.Controls.Add($comboBoxFunctions)
+# Add functions to the dropdown list
+            $functions = @(
+            "Backup All Group Policies",
+            "Check AD Replication",
+            "Default Domain Password Policy",
+            "Export All DNS Zone Records",
+            "Generate Passwords",
+            "List All AD Users",
+            "List All Domain Controllers",
+            "List All Domain SSL Certificates",
+            "List All Installed Hotfixes",
+            "List All Objects Deleted in past month"
+            "List All Security Groups",
+            "List All Users Password Last Reset",
+            "List All Users Logon History",
+            "List User Password Last Reset",
+            "List User Logon History",
+            "List Disabled User Accounts",
+            "List Inactive Users (30 Days)",
+            "List Inactive Users (60 Days)",
+            "List Inactive Users (90 Days)",
+            "List Locked User Accounts",
+            "List Users Created in the Past Month",
+            "Search Group Policies",
+            "Unlock AD User Accounts"
+            
+)
+            $functions | ForEach-Object { $comboBoxFunctions.Items.Add($_) }
+# Create a text box for status output
+            $textBoxOutput = New-Object System.Windows.Forms.TextBox
+            $textBoxOutput.Multiline = $true
+            $textBoxOutput.ScrollBars = "Vertical"
+            $textBoxOutput.Size = New-Object System.Drawing.Size(760, 400)
+            $textBoxOutput.Location = New-Object System.Drawing.Point(10, 300)
+            $textBoxOutput.Text = ""
+            $textBoxOutput.Font = New-Object System.Drawing.Font("Consolas", 10)
+            function Add-textBoxOutput{
 		    [CmdletBinding()]
 		    param ($text)
 		    $textBoxOutput.Text += "$text;"
 		    $textBoxOutput.Text += "`n# # # # # # # # # #`n"
-	}            $form.Controls.Add($textBoxOutput)# Function to add output to the text box            function Add-Output {            param ($text)            $textBoxOutput.AppendText("$text`r`n")}# Function to handle the selected function from the dropdown            $comboBoxFunctions.Add_SelectedIndexChanged({            $selectedFunction = $comboBoxFunctions.SelectedItem.ToString()            switch ($selectedFunction) {        "List All Users Logon History" {# Function to search user logon history across all domain controllers or a specific one
+	}
+            $form.Controls.Add($textBoxOutput)
+# Function to add output to the text box
+            function Add-Output {
+            param ($text)
+            $textBoxOutput.AppendText("$text`r`n")
+}
+# Function to handle the selected function from the dropdown
+            $comboBoxFunctions.Add_SelectedIndexChanged({
+            $selectedFunction = $comboBoxFunctions.SelectedItem.ToString()
+            switch ($selectedFunction) {
+        "List All Users Logon History" {
+# Function to search user logon history across all domain controllers or a specific one
             function Search-UserLogonHistory {
                 param (
                 [string]$username,
@@ -249,7 +341,10 @@
             $form.Controls.Add($exitButton)
 
 # Display the form
-            $form.ShowDialog() | Out-Null}        "List User Logon History" {# Create a form
+            $form.ShowDialog() | Out-Null
+}
+        "List User Logon History" {
+# Create a form
             $form = New-Object System.Windows.Forms.Form
             $form.BackColor = [System.Drawing.Color]::AliceBlue
             $form.StartPosition = "CenterScreen"
@@ -282,10 +377,30 @@
 
             # Show the form
             $form.ShowDialog() | Out-Null
-}        "Backup All Group Policies" {            $backupPath = "C:\Temp\GPO_Policy_Backups\"            if (-not (Test-Path $backupPath)) {                New-Item -ItemType Directory -Path $backupPath | Out-Null            }            Backup-GPO -All -Path $backupPath            Add-Output "All Group Policies have been backed up to $backupPath."        }        "Check AD Replication" {$output = repadmin /replsum | Format-list | Out-string
+}
+        "Backup All Group Policies" {
+            $backupPath = "C:\Temp\GPO_Policy_Backups\"
+            if (-not (Test-Path $backupPath)) {
+                New-Item -ItemType Directory -Path $backupPath | Out-Null
+            }
+            Backup-GPO -All -Path $backupPath
+            Add-Output "All Group Policies have been backed up to $backupPath."
+        }
+        "Check AD Replication" {$output = repadmin /replsum | Format-list | Out-string
             # Display results in text output box
             $textBoxOutput[0].AppendText($output)
-}        "List Disabled User Accounts" {            $disabledUsers = Get-ADUser -Filter { Enabled -eq $false } -Property DisplayName, Enabled            $disabledUsers | Out-GridView -Title "Disabled User Accounts"            Add-Output "Disabled User Accounts displayed in GridView."        }        "List All Users Password Last Reset" {            $Output = Get-ADUser -Filter * -Properties PasswordLastSet | Sort PasswordLastSet -Descending | Select Name,Enabled,PasswordLastSet | Out-String            $textBoxOutput[0].AppendText($output)        }        "List User Password Last Reset" {        # Function to create a GUI window for input
+}
+        "List Disabled User Accounts" {
+            $disabledUsers = Get-ADUser -Filter { Enabled -eq $false } -Property DisplayName, Enabled
+            $disabledUsers | Out-GridView -Title "Disabled User Accounts"
+            Add-Output "Disabled User Accounts displayed in GridView."
+        }
+        "List All Users Password Last Reset" {
+            $Output = Get-ADUser -Filter * -Properties PasswordLastSet | Sort PasswordLastSet -Descending | Select Name,Enabled,PasswordLastSet | Out-String
+            $textBoxOutput[0].AppendText($output)
+        }
+        "List User Password Last Reset" {
+        # Function to create a GUI window for input
             function Show-InputWindow {
             param (
             [string]$Message
@@ -352,8 +467,19 @@
     else {
         $textBoxOutput[0].AppendText("User '$username' not found in Active Directory.", "User Not Found")
          }
-    }}        "List All Installed Hotfixes" {            $output =  Get-HotFix | Format-Table -AutoSize | Out-String
-            $textBoxOutput[0].AppendText($output)        }        "List Locked User Accounts" {            $lockedUsers = Search-ADAccount -LockedOut            $lockedUsers | Out-GridView -Title "Locked User Accounts"            Add-Output "Locked User Accounts displayed in GridView."        }        "List All Objects Deleted in past month" {# Import the necessary assemblies
+    }
+}
+        "List All Installed Hotfixes" {
+            $output =  Get-HotFix | Format-Table -AutoSize | Out-String
+            $textBoxOutput[0].AppendText($output)
+        }
+        "List Locked User Accounts" {
+            $lockedUsers = Search-ADAccount -LockedOut
+            $lockedUsers | Out-GridView -Title "Locked User Accounts"
+            Add-Output "Locked User Accounts displayed in GridView."
+        }
+        "List All Objects Deleted in past month" {
+# Import the necessary assemblies
             Add-Type -AssemblyName System.Windows.Forms
             Add-Type -AssemblyName System.Drawing
 
@@ -363,7 +489,8 @@
             $form.Text = "Select Time Frame"
             $form.Size = New-Object System.Drawing.Size(300, 220)
             $form.StartPosition = "CenterScreen"
-            $form.BackColor = [System.Drawing.Color]::AliceBlue            $form.Forecolor="#000000"
+            $form.BackColor = [System.Drawing.Color]::AliceBlue
+            $form.Forecolor="#000000"
 
             $label = New-Object System.Windows.Forms.Label
             $label.Text = "Select the time frame:"
@@ -449,7 +576,8 @@
          if ($output.Count -gt 0) {
             $textBoxOutput[0].AppendText($output)
         }
-}            "Export All DNS Zone Records" {
+}
+            "Export All DNS Zone Records" {
 # Define output directory
             $outputDirectory = "C:\Temp\DNSExports"
 # Create the output directory if it doesn't exist
@@ -490,8 +618,24 @@
 # Display a pop-up window
             $wshell = New-Object -ComObject Wscript.Shell
             $wshell.Popup($dnsRecords, 0, "Export Completed", 0x1)
-    }        "List All AD Users" {            $adUsers = Get-ADUser -Filter * -Property DisplayName, SamAccountName | Out-GridView -Title "AD Users" -PassThru            Add-Output "AD Users displayed in GridView."        }        "List All Domain Controllers" {$Output = Get-ADDomainController -Filter * | Select-Object Name, Domain, IPvAddress, Forest, ComputerObjectDN, OperationMasterRoles, OperatingSystem | Format-list | Out-String 
-            $textBoxOutput[0].AppendText($output)                    }        "List All Domain SSL Certificates" {        # Add your implementation for listing SSL certificates            Add-Output "Listing of Domain SSL Certificates not implemented yet."        }        "List All Security Groups" {            $securityGroups = Get-ADGroup -Filter *            $securityGroups | Out-GridView -Title "Security Groups"            Add-Output "Security Groups displayed in GridView."        }        "Search Group Policies" {
+    }
+        "List All AD Users" {
+            $adUsers = Get-ADUser -Filter * -Property DisplayName, SamAccountName | Out-GridView -Title "AD Users" -PassThru
+            Add-Output "AD Users displayed in GridView."
+        }
+        "List All Domain Controllers" {$Output = Get-ADDomainController -Filter * | Select-Object Name, Domain, IPvAddress, Forest, ComputerObjectDN, OperationMasterRoles, OperatingSystem | Format-list | Out-String 
+            $textBoxOutput[0].AppendText($output)            
+        }
+        "List All Domain SSL Certificates" {
+        # Add your implementation for listing SSL certificates
+            Add-Output "Listing of Domain SSL Certificates not implemented yet."
+        }
+        "List All Security Groups" {
+            $securityGroups = Get-ADGroup -Filter *
+            $securityGroups | Out-GridView -Title "Security Groups"
+            Add-Output "Security Groups displayed in GridView."
+        }
+        "Search Group Policies" {
 # Create a form
             $gposearchform = New-Object System.Windows.Forms.Form
             $gposearchform.Text = "Search AD Group Policies"
@@ -562,7 +706,9 @@
             $gposearchform.Controls.Add($pictureBox)
 # Show the form
             $gposearchform.ShowDialog() | Out-Null
-        }            "Generate Passwords" {            function Create-GUI {
+        }
+            "Generate Passwords" {
+            function Create-GUI {
             $form = New-Object System.Windows.Forms.Form
             $form.Text = "Password Generator"
             $form.Width = 500
@@ -698,7 +844,9 @@
 }
 # Continue running the script in the background
 Create-GUI
-}        "Unlock AD User Accounts" {# Create a form
+}
+        "Unlock AD User Accounts" {
+# Create a form
             $lockedUsersform = New-Object System.Windows.Forms.Form
             $lockedUsersform.Text = "Locked User Account Management"
             $lockedUsersform.Size = New-Object System.Drawing.Size(370,170)
@@ -745,4 +893,71 @@ foreach ($user in $lockedUsers) {
 
 # Display the form
             $lockedUsersform.ShowDialog() | Out-Null
-}        "List Inactive Users (30 Days)" {            $inactiveUsers = Search-ADAccount -AccountInactive -TimeSpan 30.00:00:00            $inactiveUsers | Out-GridView -Title "Inactive Users (30 Days)"            Add-Output "Inactive Users for the past 30 days displayed in GridView."        }        "List Inactive Users (60 Days)" {            $inactiveUsers = Search-ADAccount -AccountInactive -TimeSpan 60.00:00:00            $inactiveUsers | Out-GridView -Title "Inactive Users (60 Days)"            Add-Output "Inactive Users for the past 60 days displayed in GridView."        }        "List Inactive Users (90 Days)" {            $inactiveUsers = Search-ADAccount -AccountInactive -TimeSpan 90.00:00:00            $inactiveUsers | Out-GridView -Title "Inactive Users (90 Days)"            Add-Output "Inactive Users for the past 90 days displayed in GridView."        }        "List Users Created in the Past Month" {            $startDate = (Get-Date).AddMonths(-1)            $newUsers = Get-ADUser -Filter { WhenCreated -ge $startDate } -Property Name, WhenCreated | Select-Object Name, WhenCreated | Out-String            $textBoxOutput[0].AppendText($newUsers)        }    }})# Create buttons            $buttonHeight = 30            $buttonWidth = 100            $buttonPadding = 10# Export to CSV button            $buttonExport = New-Object System.Windows.Forms.Button            $buttonExport.Text = "Export to CSV"            $buttonExport.BackColor = [System.Drawing.Color]::White            $buttonExport.Forecolor="#000000"            $buttonExport.Size = New-Object System.Drawing.Size($buttonWidth, $buttonHeight)            $buttonExport.Location = New-Object System.Drawing.Point(10, 720)            $form.Controls.Add($buttonExport)            $buttonExport.Add_Click({            $outputDirectory = "C:\Temp\ADReports\"        if (-not (Test-Path $outputDirectory)) {            New-Item -ItemType Directory -Path $outputDirectory | Out-Null    }            $csvPath = "$outputDirectory\ADReport_$(Get-Date -Format 'yyyyMMdd_HHmmss').csv"            $textBoxOutput.Lines | ConvertFrom-Csv | Export-Csv -Path $csvPath -NoTypeInformation            Add-Output "Output exported to $csvPath."})# Clear text button            $buttonClear = New-Object System.Windows.Forms.Button            $buttonClear.Text = "Clear Text"            $buttonClear.BackColor = [System.Drawing.Color]::White            $buttonClear.Forecolor="#000000"            $buttonClear.Size = New-Object System.Drawing.Size($buttonWidth, $buttonHeight)            $buttonClear.Location = New-Object System.Drawing.Point(140, 720)            $form.Controls.Add($buttonClear)            $buttonClear.Add_Click({            $textBoxOutput.Clear()})# Exit button            $buttonExit = New-Object System.Windows.Forms.Button            $buttonExit.Text = "Exit"            $buttonExit.Size = New-Object System.Drawing.Size($buttonWidth, $buttonHeight)            $buttonExit.BackColor = [System.Drawing.Color]::White            $buttonExit.Forecolor="#000000"            $buttonExit.Location = New-Object System.Drawing.Point(670, 720)            $form.Controls.Add($buttonExit)            $buttonExit.Add_Click({            $form.Close()})# Show the form$form.ShowDialog() | Out-Null
+}
+        "List Inactive Users (30 Days)" {
+            $inactiveUsers = Search-ADAccount -AccountInactive -TimeSpan 30.00:00:00
+            $inactiveUsers | Out-GridView -Title "Inactive Users (30 Days)"
+            Add-Output "Inactive Users for the past 30 days displayed in GridView."
+        }
+        "List Inactive Users (60 Days)" {
+            $inactiveUsers = Search-ADAccount -AccountInactive -TimeSpan 60.00:00:00
+            $inactiveUsers | Out-GridView -Title "Inactive Users (60 Days)"
+            Add-Output "Inactive Users for the past 60 days displayed in GridView."
+        }
+        "List Inactive Users (90 Days)" {
+            $inactiveUsers = Search-ADAccount -AccountInactive -TimeSpan 90.00:00:00
+            $inactiveUsers | Out-GridView -Title "Inactive Users (90 Days)"
+            Add-Output "Inactive Users for the past 90 days displayed in GridView."
+        }
+        "List Users Created in the Past Month" {
+            $startDate = (Get-Date).AddMonths(-1)
+            $newUsers = Get-ADUser -Filter { WhenCreated -ge $startDate } -Property Name, WhenCreated | Select-Object Name, WhenCreated | Out-String
+            $textBoxOutput[0].AppendText($newUsers)
+        }
+    }
+})
+# Create buttons
+            $buttonHeight = 30
+            $buttonWidth = 100
+            $buttonPadding = 10
+# Export to CSV button
+            $buttonExport = New-Object System.Windows.Forms.Button
+            $buttonExport.Text = "Export to CSV"
+            $buttonExport.BackColor = [System.Drawing.Color]::White
+            $buttonExport.Forecolor="#000000"
+            $buttonExport.Size = New-Object System.Drawing.Size($buttonWidth, $buttonHeight)
+            $buttonExport.Location = New-Object System.Drawing.Point(10, 720)
+            $form.Controls.Add($buttonExport)
+            $buttonExport.Add_Click({
+            $outputDirectory = "C:\Temp\ADReports\"
+        if (-not (Test-Path $outputDirectory)) {
+            New-Item -ItemType Directory -Path $outputDirectory | Out-Null
+    }
+            $csvPath = "$outputDirectory\ADReport_$(Get-Date -Format 'yyyyMMdd_HHmmss').csv"
+            $textBoxOutput.Lines | ConvertFrom-Csv | Export-Csv -Path $csvPath -NoTypeInformation
+            Add-Output "Output exported to $csvPath."
+})
+# Clear text button
+            $buttonClear = New-Object System.Windows.Forms.Button
+            $buttonClear.Text = "Clear Text"
+            $buttonClear.BackColor = [System.Drawing.Color]::White
+            $buttonClear.Forecolor="#000000"
+            $buttonClear.Size = New-Object System.Drawing.Size($buttonWidth, $buttonHeight)
+            $buttonClear.Location = New-Object System.Drawing.Point(140, 720)
+            $form.Controls.Add($buttonClear)
+            $buttonClear.Add_Click({
+            $textBoxOutput.Clear()
+})
+# Exit button
+            $buttonExit = New-Object System.Windows.Forms.Button
+            $buttonExit.Text = "Exit"
+            $buttonExit.Size = New-Object System.Drawing.Size($buttonWidth, $buttonHeight)
+            $buttonExit.BackColor = [System.Drawing.Color]::White
+            $buttonExit.Forecolor="#000000"
+            $buttonExit.Location = New-Object System.Drawing.Point(670, 720)
+            $form.Controls.Add($buttonExit)
+            $buttonExit.Add_Click({
+            $form.Close()
+})
+# Show the form
+$form.ShowDialog() | Out-Null
