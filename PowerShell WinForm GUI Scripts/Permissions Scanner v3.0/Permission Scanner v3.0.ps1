@@ -16,7 +16,7 @@ $form.ShowIcon = $false
 # Create Picture Box
 $pictureBox = New-Object System.Windows.Forms.PictureBox
 $pictureBox.Location = New-Object System.Drawing.Point(775, 10)
-$imageURL = "C:\ccadmin\Disk Permission Scanner v1.0\PermissionsReporter.png"
+$imageURL = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/Permissions%20Scanner%20v3.0/PermissionsReporter.png"
 $image = [System.Net.WebRequest]::Create($imageUrl).GetResponse().GetResponseStream()
 $pictureBox.Image = [System.Drawing.Image]::FromStream($image)
 $pictureBox.SizeMode = "Stretch"  # Fit the image within the PictureBox
