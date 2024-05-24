@@ -5,7 +5,7 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
 $form = New-Object System.Windows.Forms.Form
-$form.Text = "Azure AD Roles and Administrators"
+$form.Text = "Azure EntraID Roles and Administrators"
 $form.Size = New-Object System.Drawing.Size(810, 830)
 $form.BackColor = [System.Drawing.Color]::LightBlue
 $form.StartPosition = "CenterScreen"
