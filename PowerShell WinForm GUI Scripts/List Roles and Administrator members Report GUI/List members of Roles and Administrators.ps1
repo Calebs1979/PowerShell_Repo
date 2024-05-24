@@ -37,7 +37,7 @@ function Set-HoverEffect {
 # Create Picture Box
 $pictureBox = New-Object System.Windows.Forms.PictureBox
 $pictureBox.Location = New-Object System.Drawing.Point(110, 40)
-$imageURL = "C:\ccadmin\List Roles and Administrator members Report GUI\Header.png"
+$imageURL = "https://raw.githubusercontent.com/Calebs1979/PowerShell_Repo/main/PowerShell%20WinForm%20GUI%20Scripts/List%20Roles%20and%20Administrator%20members%20Report%20GUI/Header.png"
 $image = [System.Drawing.Image]::FromFile($imageURL)
 $pictureBox.Image = $image
 $pictureBox.SizeMode = "Stretch"  # Fit the image within the PictureBox
