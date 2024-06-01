@@ -3,14 +3,14 @@ Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName PresentationCore
 
 # Create transcript log folder if not exist
-$folderPath = "C:\RTAdmin\Reports Toolset Files\Transcript logs"
+$folderPath = "C:\Deduplication Transcript Logs\Transcript logs"
 if (-not (Test-Path -Path $folderPath)) {  
     New-Item -Path $folderPath -ItemType Directory
 }
 
 
 # Start transcript log  file and write to path C:\RTAdmin\
-Start-Transcript -Path "C:\RTAdmin\Reports Toolset Files\Transcript logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Log1.txt"
+Start-Transcript -Path "C:\Deduplication Transcript Logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Log1.txt"
 
 function Create-DeduplicationAnalysisForm {
     param (
