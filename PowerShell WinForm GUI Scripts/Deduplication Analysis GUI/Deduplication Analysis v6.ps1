@@ -2,6 +2,16 @@
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName PresentationCore
 
+# Create transcript log folder if not exist
+$folderPath = "C:\RTAdmin\Reports Toolset Files\Transcript logs"
+if (-not (Test-Path -Path $folderPath)) {  
+    New-Item -Path $folderPath -ItemType Directory
+}
+
+
+# Start transcript log  file and write to path C:\RTAdmin\
+Start-Transcript -Path "C:\RTAdmin\Reports Toolset Files\Transcript logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Log1.txt"
+
 function Create-DeduplicationAnalysisForm {
     param (
         [string]$initialDirectory
@@ -169,8 +179,8 @@ function Create-DeduplicationAnalysisForm {
     $pauseButton.ForeColor = [System.Drawing.Color]::White
     $pauseButton.Enabled = $true
     $pauseButton.Add_Click({
-        $pauseButton.Text = "Paused"
-        $pauseButton.BackColor = [System.Drawing.Color]::Gray
+    $pauseButton.Text = "Paused"
+    $pauseButton.BackColor = [System.Drawing.Color]::Gray
     })
     $form.Controls.Add($pauseButton)
 
@@ -241,6 +251,51 @@ function Create-DeduplicationAnalysisForm {
     })            
 
     $form.Controls.Add($enableDedupButton)
+
+   # Create Backup Duplicate Files button
+$backupButton = New-Object System.Windows.Forms.Button
+$backupButton.Text = "Backup Duplicate Files"
+$backupButton.Location = New-Object System.Drawing.Point(310, 770)
+$backupButton.Size = New-Object System.Drawing.Size(180, 30)
+$backupButton.Add_Click({
+    $backupFolderDialog = New-Object System.Windows.Forms.FolderBrowserDialog
+    $backupFolderDialog.Description = "Select backup folder"
+    if ($backupFolderDialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+        $backupFolderPath = $backupFolderDialog.SelectedPath
+
+        Write-Host "Selected backup folder: $backupFolderPath"
+
+        # Loop through DataGridView rows
+        foreach ($row in $outputGrid.Rows) {
+            $fileName = $row.Cells["FileName"].Value
+            $filePath = $row.Cells["Path"].Value
+            $status = $row.Cells["Status"].Value
+
+            # Check if status is "Duplicate" (assuming status is set as "Duplicate" for red rows)
+            if ($status -eq "Duplicate") {
+                Write-Host "Copying duplicate file and directory structure: $filePath to $backupFolderPath"
+
+                # Copy the entire directory structure recursively
+                $directoryPath = [System.IO.Path]::GetDirectoryName($filePath)
+                $relativePath = $directoryPath.Replace((Get-Item $inputBox.Text).FullName, "").TrimStart("\")
+                $destinationDir = Join-Path -Path $backupFolderPath -ChildPath $relativePath
+
+                if (-not (Test-Path -Path $destinationDir)) {
+                    New-Item -ItemType Directory -Path $destinationDir | Out-Null
+                }
+
+                # Copy the duplicate file itself
+                $destinationFile = Join-Path -Path $destinationDir -ChildPath $fileName
+                Copy-Item -Path $filePath -Destination $destinationFile -Force
+            }
+        }
+
+        [System.Windows.Forms.MessageBox]::Show("Backup completed.", "Backup", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Information)
+    }
+})
+$form.Controls.Add($backupButton)
+
+
 
     # Create Exit button
     $exitButton = New-Object System.Windows.Forms.Button
