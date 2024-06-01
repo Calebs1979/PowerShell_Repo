@@ -10,7 +10,7 @@ if (-not (Test-Path -Path $folderPath)) {
 
 
 # Start transcript log  file and write to path C:\RTAdmin\
-Start-Transcript -Path "C:\Deduplication Transcript Logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Log1.txt"
+Start-Transcript -Path "C:\Deduplication Transcript Logs\$((Get-Date).ToString("yyyyMMdd_HHmmss"))_Log.csv"
 
 function Create-DeduplicationAnalysisForm {
     param (
